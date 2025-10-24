@@ -27,7 +27,6 @@ Partial Class SerialComExample
         Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
         Me.CountTextBox = New System.Windows.Forms.TextBox()
         Me.PWMTrackBar = New System.Windows.Forms.TrackBar()
-        Me.PWMButton = New System.Windows.Forms.Button()
         CType(Me.PWMTrackBar, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -42,32 +41,25 @@ Partial Class SerialComExample
         '
         Me.CountTextBox.Location = New System.Drawing.Point(500, 151)
         Me.CountTextBox.Name = "CountTextBox"
+        Me.CountTextBox.ReadOnly = True
         Me.CountTextBox.Size = New System.Drawing.Size(100, 22)
         Me.CountTextBox.TabIndex = 0
         '
         'PWMTrackBar
         '
         Me.PWMTrackBar.Location = New System.Drawing.Point(371, 151)
-        Me.PWMTrackBar.Maximum = 2
+        Me.PWMTrackBar.Maximum = 25
+        Me.PWMTrackBar.Minimum = 5
         Me.PWMTrackBar.Name = "PWMTrackBar"
         Me.PWMTrackBar.Size = New System.Drawing.Size(104, 56)
         Me.PWMTrackBar.TabIndex = 1
-        '
-        'PWMButton
-        '
-        Me.PWMButton.Location = New System.Drawing.Point(500, 184)
-        Me.PWMButton.Name = "PWMButton"
-        Me.PWMButton.Size = New System.Drawing.Size(75, 23)
-        Me.PWMButton.TabIndex = 2
-        Me.PWMButton.Text = "Send"
-        Me.PWMButton.UseVisualStyleBackColor = True
+        Me.PWMTrackBar.Value = 5
         '
         'SerialComExample
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 16.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(800, 450)
-        Me.Controls.Add(Me.PWMButton)
         Me.Controls.Add(Me.PWMTrackBar)
         Me.Controls.Add(Me.CountTextBox)
         Me.Name = "SerialComExample"
@@ -82,5 +74,4 @@ Partial Class SerialComExample
     Friend WithEvents Timer1 As Timer
     Friend WithEvents CountTextBox As TextBox
     Friend WithEvents PWMTrackBar As TrackBar
-    Friend WithEvents PWMButton As Button
 End Class
