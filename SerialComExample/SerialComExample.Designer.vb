@@ -26,6 +26,9 @@ Partial Class SerialComExample
         Me.SerialPort1 = New System.IO.Ports.SerialPort(Me.components)
         Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
         Me.CountTextBox = New System.Windows.Forms.TextBox()
+        Me.PWMTrackBar = New System.Windows.Forms.TrackBar()
+        Me.PWMButton = New System.Windows.Forms.Button()
+        CType(Me.PWMTrackBar, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'SerialPort1
@@ -33,6 +36,7 @@ Partial Class SerialComExample
         '
         'Timer1
         '
+        Me.Timer1.Interval = 25
         '
         'CountTextBox
         '
@@ -41,14 +45,34 @@ Partial Class SerialComExample
         Me.CountTextBox.Size = New System.Drawing.Size(100, 22)
         Me.CountTextBox.TabIndex = 0
         '
+        'PWMTrackBar
+        '
+        Me.PWMTrackBar.Location = New System.Drawing.Point(371, 151)
+        Me.PWMTrackBar.Maximum = 2
+        Me.PWMTrackBar.Name = "PWMTrackBar"
+        Me.PWMTrackBar.Size = New System.Drawing.Size(104, 56)
+        Me.PWMTrackBar.TabIndex = 1
+        '
+        'PWMButton
+        '
+        Me.PWMButton.Location = New System.Drawing.Point(500, 184)
+        Me.PWMButton.Name = "PWMButton"
+        Me.PWMButton.Size = New System.Drawing.Size(75, 23)
+        Me.PWMButton.TabIndex = 2
+        Me.PWMButton.Text = "Send"
+        Me.PWMButton.UseVisualStyleBackColor = True
+        '
         'SerialComExample
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 16.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(800, 450)
+        Me.Controls.Add(Me.PWMButton)
+        Me.Controls.Add(Me.PWMTrackBar)
         Me.Controls.Add(Me.CountTextBox)
         Me.Name = "SerialComExample"
         Me.Text = "Form1"
+        CType(Me.PWMTrackBar, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -57,4 +81,6 @@ Partial Class SerialComExample
     Friend WithEvents SerialPort1 As IO.Ports.SerialPort
     Friend WithEvents Timer1 As Timer
     Friend WithEvents CountTextBox As TextBox
+    Friend WithEvents PWMTrackBar As TrackBar
+    Friend WithEvents PWMButton As Button
 End Class

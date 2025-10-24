@@ -84,40 +84,41 @@ Public Class SerialComExample
 
     Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
         Connect()
-        ShiftLEDs()
+        'ShiftLEDs()
+        'PWM_Select()
     End Sub
 
     Sub ShiftLEDs()
-        Dim preCount As Integer
-        Dim postCount As Integer
-        Dim data(1) As Byte 'put bytes into an array
+        'Dim preCount As Integer
+        'Dim postCount As Integer
+        Dim data(0) As Byte 'put bytes into an array
 
-        preCount = CInt(CountTextBox.Text)
-        postCount = Counter(preCount)
+        'preCount = CInt(CountTextBox.Text)
+        'postCount = Counter(preCount)
 
-        data(0) = &H20 'Writes to the Digital Output
-        'data(0) = &H60 'Writes to the USART TX Buffer
+        data(0) = &H24 'Dollar sign in Ascii
 
-        If postCount = 1 Then
-                data(1) = &H1 'actual data as a byte
-            ElseIf postCount = 2 Then
-                data(1) = &H2 'actual data as a byte
-            ElseIf postCount = 3 Then
-                data(1) = &H4 'actual data as a byte
-            ElseIf postCount = 4 Then
-                data(1) = &H8 'actual data as a byte
-            ElseIf postCount = 5 Then
-                data(1) = &H10 'actual data as a byte
-            ElseIf postCount = 6 Then
-                data(1) = &H20 'actual data as a byte
-            ElseIf postCount = 7 Then
-                data(1) = &H40 'actual data as a byte
-            ElseIf postCount = 8 Then
-                data(1) = &H80 'actual data as a byte
+        SerialPort1.Write(data, 0, 1) '
+        'CountTextBox.Text = CStr(postCount)
+    End Sub
+
+    Sub PWM_Select()
+        Dim data(3) As Byte
+
+        If PWMTrackBar.Value = 0 Then
+            data(0) = &H24
+            data(1) = &H32
+            data(2) = &H23
+            data(3) = &HAF
+            CountTextBox.Text = "0.5"
+        Else
+            data(0) = &H24
+            data(1) = &HFA
+            data(2) = &H23
+            data(3) = &HC3
+            CountTextBox.Text = "2.5"
         End If
-
-        SerialPort1.Write(data, 0, 2) '
-        CountTextBox.Text = CStr(postCount)
+        SerialPort1.Write(data, 0, 4)
     End Sub
 
     Function Counter(currentCount As Integer) As Integer
@@ -128,4 +129,12 @@ Public Class SerialComExample
         End If
         Return currentCount
     End Function
+
+    Private Sub PWMButton_Click(sender As Object, e As EventArgs) Handles PWMButton.Click
+        'PWM_Select()
+    End Sub
+
+    Private Sub PWMTrackBar_Scroll(sender As Object, e As EventArgs) Handles PWMTrackBar.Scroll
+        PWM_Select()
+    End Sub
 End Class
