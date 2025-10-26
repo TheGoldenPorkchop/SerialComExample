@@ -18,15 +18,15 @@ Public Class SerialComExample
     End Sub
 
     Sub PWM_Select()
-        Dim data(2) As Byte
+        Dim data(0) As Byte
         'data(0) = &H24 ' $
         'data(0) = &H22 ' "
 
         Select Case PWMTrackBar.Value
             Case 5
                 data(0) = &H24 ' $
-                data(1) = &HC3 'PR_PW = 50 32
-                data(2) = &H32 'PR_PS = 195 C3
+                data(1) = &HC3 'PR_PW = 50 C3
+                data(2) = &H32 'PR_PS = 195 32
                 CountTextBox.Text = "0.5ms"
             Case 6
                 data(0) = &H24 ' $
@@ -40,8 +40,8 @@ Public Class SerialComExample
                 CountTextBox.Text = "0.7ms"
             Case 8
                 data(0) = &H24 ' $
-                data(1) = &HC8 'PR_PW = 80 50
-                data(2) = &HB4 'PR_PS = 192 C0
+                data(1) = &H50 'PR_PW = 80
+                data(2) = &HC0 'PR_PS = 192
                 CountTextBox.Text = "0.8ms"
             Case 9
                 data(0) = &H24 ' $
@@ -55,8 +55,8 @@ Public Class SerialComExample
                 CountTextBox.Text = "1.0ms"
             Case 11
                 data(0) = &H24 ' $
-                data(1) = &H6E 'PR_PW = 110 6E
-                data(2) = &HBD 'PR_PS = 189 BD
+                data(1) = &H6E 'PR_PW = 110
+                data(2) = &HBD 'PR_PS = 189
                 CountTextBox.Text = "1.1ms"
             Case 12
                 data(0) = &H24 ' $
@@ -90,8 +90,8 @@ Public Class SerialComExample
                 CountTextBox.Text = "1.7ms"
             Case 18
                 data(0) = &H24 ' $
-                data(1) = &HB4 'PR_PW = 180 B4
-                data(2) = &HB6 'PR_PS = 182 B6
+                data(1) = &HB4 'PR_PW = 180
+                data(2) = &HB6 'PR_PS = 182
                 CountTextBox.Text = "1.8ms"
             Case 19
                 data(0) = &H24 ' $
@@ -137,41 +137,42 @@ Public Class SerialComExample
         SerialPort1.Write(data, 0, 3)
     End Sub
 
-    'Private Sub SerialPort1_DataReceived(sender As Object, e As SerialDataReceivedEventArgs) Handles SerialPort1.DataReceived
-    'CheckForIllegalCrossThreadCalls = False
-    'Dim numberOfBytes = SerialPort1.BytesToRead
-    'Dim' buffer(numberOfBytes - 1) As Byte
-    'Dim got As Integer = SerialPort1.Read(buffer, 0, numberOfBytes)
 
-    ' BytesToReadTextBox.Text = CStr(numberOfBytes)
-    'If got > 0 Then
-    '     AppendRX(buffer, got)
-    ' End If
+    Private Sub SerialPort1_DataReceived(sender As Object, e As SerialDataReceivedEventArgs) Handles SerialPort1.DataReceived
+        CheckForIllegalCrossThreadCalls = False
+        Dim numberOfBytes = SerialPort1.BytesToRead
+        Dim buffer(numberOfBytes - 1) As Byte
+        Dim got As Integer = SerialPort1.Read(buffer, 0, numberOfBytes)
 
-    'End Sub
+        BytesToReadTextBox.Text = CStr(numberOfBytes)
+        If got > 0 Then
+            AppendRX(buffer, got)
+        End If
 
-    'Private Sub AppendRX(data() As Byte, count As Integer)
-    'Dim hexLine As New System.Text.StringBuilder()
-    'Dim asciiLine As New System.Text.StringBuilder()
+    End Sub
 
-    'F'or i = 0 To count - 1
-    'Dim b = data(i)
-    '       asciiLine.Append(If(b >= 32 AndAlso b <= 126, ChrW(b), "."c))
-    '        hexLine.Append(b.ToString("X2")).Append(" ")
-    ' Next
-    '
-    '   HandShakeAsciiTextBox.Text = asciiLine.ToString()
-    '   HandShakeHexTextBox.Text = hexLine.ToString()
-    '
-    ' If HandShakeHexTextBox.Text = "25 " Then
-    'PWM_Select()
-    'Timer1.Start()
-    ' Else
-    '        HandShakeAsciiTextBox.Text = asciiLine.ToString()
-    '       HandShakeHexTextBox.Text = hexLine.ToString()
-    'End If
+    Private Sub AppendRX(data() As Byte, count As Integer)
+        Dim hexLine As New System.Text.StringBuilder()
+        Dim asciiLine As New System.Text.StringBuilder()
 
-    'End Sub
+        For i = 0 To count - 1
+            Dim b = data(i)
+            asciiLine.Append(If(b >= 32 AndAlso b <= 126, ChrW(b), "."c))
+            hexLine.Append(b.ToString("X2")).Append(" ")
+        Next
+
+        HandShakeAsciiTextBox.Text = asciiLine.ToString()
+        HandShakeHexTextBox.Text = hexLine.ToString()
+
+        'If HandShakeHexTextBox.Text = "25 " Then
+        'PWM_Select()
+        'Timer1.Start()
+        'Else
+        'HandShakeAsciiTextBox.Text = asciiLine.ToString()
+        'HandShakeHexTextBox.Text = hexLine.ToString()
+        'End If
+
+    End Sub
 
     Private Sub SerialComExample_Load(sender As Object, e As EventArgs) Handles Me.Load
         Connect()
