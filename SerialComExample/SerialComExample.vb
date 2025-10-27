@@ -24,117 +24,73 @@ Public Class SerialComExample
 
         Select Case PWMTrackBar.Value
             Case 5
-                data(0) = &H24 ' $
-                data(1) = &HC3 'PR_PW = 50 C3
-                data(2) = &H32 'PR_PS = 195 32
+                data(0) = &H5
                 CountTextBox.Text = "0.5ms"
             Case 6
-                data(0) = &H24 ' $
-                data(1) = &H3C 'PR_PW = 60
-                data(2) = &HC2 'PR_PS = 195
+                data(0) = &H6
                 CountTextBox.Text = "0.6ms"
             Case 7
-                data(0) = &H24 ' $
-                data(1) = &H46 'PR_PW = 70
-                data(2) = &HC1 'PR_PS = 193
+                data(0) = &H7
                 CountTextBox.Text = "0.7ms"
             Case 8
-                data(0) = &H24 ' $
-                data(1) = &H50 'PR_PW = 80
-                data(2) = &HC0 'PR_PS = 192
+                data(0) = &H8
                 CountTextBox.Text = "0.8ms"
             Case 9
-                data(0) = &H24 ' $
-                data(1) = &H5A 'PR_PW = 90
-                data(2) = &HBF 'PR_PS = 191
+                data(0) = &H9
                 CountTextBox.Text = "0.9ms"
             Case 10
-                data(0) = &H24 ' $
-                data(1) = &H64 'PR_PW = 120
-                data(2) = &HBE 'PR_PS = 188
+                data(0) = &HA
                 CountTextBox.Text = "1.0ms"
             Case 11
-                data(0) = &H24 ' $
-                data(1) = &H6E 'PR_PW = 110
-                data(2) = &HBD 'PR_PS = 189
+                data(0) = &HB
                 CountTextBox.Text = "1.1ms"
             Case 12
-                data(0) = &H24 ' $
-                data(1) = &H78 'PR_PW = 120
-                data(2) = &HBC 'PR_PS = 188
+                data(0) = &HC
                 CountTextBox.Text = "1.2ms"
             Case 13
-                data(0) = &H24 ' $
-                data(1) = &H82 'PR_PW = 130
-                data(2) = &HBB 'PR_PS = 187
+                data(0) = &HD
                 CountTextBox.Text = "1.3ms"
             Case 14
-                data(0) = &H24 ' $
-                data(1) = &H8C 'PR_PW = 140
-                data(2) = &HBA 'PR_PS = 186
+                data(0) = &HE
                 CountTextBox.Text = "1.4ms"
             Case 15
-                data(0) = &H24 ' $
-                data(1) = &H96 'PR_PW = 150
-                data(2) = &HB9 'PR_PS = 185
+                data(0) = &HF
                 CountTextBox.Text = "1.5ms"
             Case 16
-                data(0) = &H24 ' $
-                data(1) = &HA0 'PR_PW = 160
-                data(2) = &HB8 'PR_PS = 184
+                data(0) = &H10
                 CountTextBox.Text = "1.6ms"
             Case 17
-                data(0) = &H24 ' $
-                data(1) = &HAA 'PR_PW = 170
-                data(2) = &HB7 'PR_PS = 183
+                data(0) = &H11
                 CountTextBox.Text = "1.7ms"
             Case 18
-                data(0) = &H24 ' $
-                data(1) = &HB4 'PR_PW = 180
-                data(2) = &HB6 'PR_PS = 182
+                data(0) = &H12
                 CountTextBox.Text = "1.8ms"
             Case 19
-                data(0) = &H24 ' $
-                data(1) = &HBE 'PR_PW = 190
-                data(2) = &HB5 'PR_PS = 181
+                data(0) = &H13
                 CountTextBox.Text = "1.9ms"
             Case 20
-                data(0) = &H24 ' $
-                data(1) = &HC8 'PR_PW = 200
-                data(2) = &HB4 'PR_PS = 180
+                data(0) = &H14
                 CountTextBox.Text = "2.0ms"
             Case 21
-                data(0) = &H24 ' $
-                data(1) = &HD2 'PR_PW = 210
-                data(2) = &HB3 'PR_PS = 179
+                data(0) = &H15
                 CountTextBox.Text = "2.1ms"
             Case 22
-                data(0) = &H24 ' $
-                data(1) = &HDC 'PR_PW = 220
-                data(2) = &HB2 'PR_PS = 178
+                data(0) = &H16
                 CountTextBox.Text = "2.2ms"
             Case 23
-                data(0) = &H24 ' $
-                data(1) = &HE6 'PR_PW = 230
-                data(2) = &HB1 'PR_PS = 177
+                data(0) = &H17
                 CountTextBox.Text = "2.3ms"
             Case 24
-                data(0) = &H24 ' $
-                data(1) = &HF0 'PR_PW = 240
-                data(2) = &HB0 'PR_PS = 176
+                data(0) = &H18
                 CountTextBox.Text = "2.4ms"
             Case 25
-                data(0) = &H24 ' $
-                data(1) = &HFA 'PR_PW = 250
-                data(2) = &HAF 'PR_PS = 175
+                data(0) = &H19
                 CountTextBox.Text = "2.5ms"
             Case Else
-                data(0) = &H24 ' $
-                data(1) = &HFA 'PR_PW = 250
-                data(2) = &HAF 'PR_PS = 175
-                CountTextBox.Text = "2.5ms"
+                data(0) = &H21
+                CountTextBox.Text = "Erm.."
         End Select
-        SerialPort1.Write(data, 0, 3)
+        SerialPort1.Write(data, 0, 1)
     End Sub
 
 
@@ -146,7 +102,7 @@ Public Class SerialComExample
 
         BytesToReadTextBox.Text = CStr(numberOfBytes)
         If got > 0 Then
-            AppendRX(buffer, got)
+            'AppendRX(buffer, got)
         End If
 
     End Sub
@@ -164,13 +120,13 @@ Public Class SerialComExample
         HandShakeAsciiTextBox.Text = asciiLine.ToString()
         HandShakeHexTextBox.Text = hexLine.ToString()
 
-        'If HandShakeHexTextBox.Text = "25 " Then
-        'PWM_Select()
-        'Timer1.Start()
-        'Else
-        'HandShakeAsciiTextBox.Text = asciiLine.ToString()
-        'HandShakeHexTextBox.Text = hexLine.ToString()
-        'End If
+        If HandShakeHexTextBox.Text = "24 " Then
+            'PWM_Select()
+            'Timer1.Start()
+        Else
+            'HandShakeAsciiTextBox.Text = asciiLine.ToString()
+            'HandShakeHexTextBox.Text = hexLine.ToString()
+        End If
 
     End Sub
 
