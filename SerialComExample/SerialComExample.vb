@@ -4,6 +4,7 @@ Imports System.Windows.Forms.VisualStyles.VisualStyleElement.TrackBar
 Public Class SerialComExample
     Private Sub SerialComExample_Load(sender As Object, e As EventArgs) Handles Me.Load
         Connect()
+        Timer1.Start()
     End Sub
     Sub Connect()
         SerialPort1.Close()
@@ -86,57 +87,49 @@ Public Class SerialComExample
                 CountTextBox.Text = "Erm.." 'Catch Error
         End Select
 
-        If ADCRadioButton.Checked = True Then
-            data(1) = &H21
+        If ADCCheckBox.Checked = True Then
+            data(1) = &H23
         Else
-            data(1) = &H0
+            data(1) = &H21
         End If
 
         SerialPort1.Write(data, 0, 2)
+
     End Sub
     Private Sub SerialPort1_DataReceived(sender As Object, e As SerialDataReceivedEventArgs) Handles SerialPort1.DataReceived
         CheckForIllegalCrossThreadCalls = False
         Dim numberOfBytes = SerialPort1.BytesToRead
-        Dim buffer(numberOfBytes - 1) As Byte
-        Dim got As Integer = SerialPort1.Read(buffer, 0, numberOfBytes)
         BytesToReadTextBox.Text = CStr(numberOfBytes)
-        If got > 0 Then
-            If buffer(0) = &H24 Then
-                PWM_Select()
-            End If
-        End If
+
     End Sub
-    Private Sub AppendRX(data() As Byte, count As Integer)
-        Dim hexLine As New System.Text.StringBuilder()
-        Dim asciiLine As New System.Text.StringBuilder()
-        For i = 0 To count - 1
-            Dim b = data(i)
-            asciiLine.Append(If(b >= 32 AndAlso b <= 126, ChrW(b), "."c))
-            hexLine.Append(b.ToString("X2")).Append(" ")
-        Next
-        HandShakeAsciiTextBox.Text = asciiLine.ToString()
-        HandShakeHexTextBox.Text = hexLine.ToString()
-        If hexLine.ToString = "24 " Then 'HandShake go well?
-            PWM_Select()
-        End If
-    End Sub
+
     Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
         CheckForIllegalCrossThreadCalls = False
         Dim numberOfBytes = SerialPort1.BytesToRead
-        If numberOfBytes = 0 Then
-            HandShakeAsciiTextBox.Text = ""
-            HandShakeHexTextBox.Text = ""
+        'Dim buffer(numberOfBytes - 1) As Byte
+        Dim buffer(2) As Byte
+        Dim got As Integer = SerialPort1.Read(buffer, 0, numberOfBytes)
+        BytesToReadTextBox.Text = CStr(numberOfBytes)
+
+        If got > 0 Then
+            If buffer(0) = &H24 Then
+                'Do Until buffer(1).ToString("X2") IsNot "00"
+                If ADCCheckBox.Checked = True Then
+                    'RAWADCTextBox.Text = buffer(1).ToString("X2") + " & " + buffer(2).ToString("X2")
+                    RAWADCTextBox.Text = buffer(1).ToString + " & " + buffer(2).ToString
+                End If
+                PWM_Select()
+                'Loop
+            End If
+
         End If
-        Timer1.Stop()
     End Sub
     Private Sub PWMTrackBar_Scroll(sender As Object, e As EventArgs) Handles PWMTrackBar.Scroll
-        Timer1.Start()
+        'Timer1.Start()
         Dim data(0) As Byte
         data(0) = &H24 '$
+
+        SerialPort1.ReadExisting()
         SerialPort1.Write(data, 0, 1)
-    End Sub
-
-    Private Sub Label3_Click(sender As Object, e As EventArgs) Handles Label3.Click
-
     End Sub
 End Class

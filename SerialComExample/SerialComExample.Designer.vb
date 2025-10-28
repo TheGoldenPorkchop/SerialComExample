@@ -33,7 +33,10 @@ Partial Class SerialComExample
         Me.Label1 = New System.Windows.Forms.Label()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.Label3 = New System.Windows.Forms.Label()
-        Me.ADCRadioButton = New System.Windows.Forms.RadioButton()
+        Me.Label4 = New System.Windows.Forms.Label()
+        Me.RAWADCTextBox = New System.Windows.Forms.TextBox()
+        Me.VoltADCTextBox = New System.Windows.Forms.TextBox()
+        Me.ADCCheckBox = New System.Windows.Forms.CheckBox()
         CType(Me.PWMTrackBar, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -42,7 +45,6 @@ Partial Class SerialComExample
         '
         'Timer1
         '
-        Me.Timer1.Interval = 1000
         '
         'CountTextBox
         '
@@ -68,6 +70,7 @@ Partial Class SerialComExample
         '
         Me.BytesToReadTextBox.Location = New System.Drawing.Point(12, 12)
         Me.BytesToReadTextBox.Name = "BytesToReadTextBox"
+        Me.BytesToReadTextBox.ReadOnly = True
         Me.BytesToReadTextBox.Size = New System.Drawing.Size(177, 22)
         Me.BytesToReadTextBox.TabIndex = 2
         '
@@ -75,6 +78,7 @@ Partial Class SerialComExample
         '
         Me.HandShakeAsciiTextBox.Location = New System.Drawing.Point(12, 40)
         Me.HandShakeAsciiTextBox.Name = "HandShakeAsciiTextBox"
+        Me.HandShakeAsciiTextBox.ReadOnly = True
         Me.HandShakeAsciiTextBox.Size = New System.Drawing.Size(177, 22)
         Me.HandShakeAsciiTextBox.TabIndex = 3
         '
@@ -82,6 +86,7 @@ Partial Class SerialComExample
         '
         Me.HandShakeHexTextBox.Location = New System.Drawing.Point(12, 68)
         Me.HandShakeHexTextBox.Name = "HandShakeHexTextBox"
+        Me.HandShakeHexTextBox.ReadOnly = True
         Me.HandShakeHexTextBox.Size = New System.Drawing.Size(177, 22)
         Me.HandShakeHexTextBox.TabIndex = 4
         '
@@ -112,23 +117,50 @@ Partial Class SerialComExample
         Me.Label3.TabIndex = 7
         Me.Label3.Text = "Pulse Width"
         '
-        'ADCRadioButton
+        'Label4
         '
-        Me.ADCRadioButton.AutoSize = True
-        Me.ADCRadioButton.Location = New System.Drawing.Point(385, 71)
-        Me.ADCRadioButton.Name = "ADCRadioButton"
-        Me.ADCRadioButton.Size = New System.Drawing.Size(56, 20)
-        Me.ADCRadioButton.TabIndex = 8
-        Me.ADCRadioButton.TabStop = True
-        Me.ADCRadioButton.Text = "ADC"
-        Me.ADCRadioButton.UseVisualStyleBackColor = True
+        Me.Label4.AutoSize = True
+        Me.Label4.Location = New System.Drawing.Point(588, 46)
+        Me.Label4.Name = "Label4"
+        Me.Label4.Size = New System.Drawing.Size(67, 16)
+        Me.Label4.TabIndex = 9
+        Me.Label4.Text = "ADC Data"
+        '
+        'RAWADCTextBox
+        '
+        Me.RAWADCTextBox.Location = New System.Drawing.Point(591, 63)
+        Me.RAWADCTextBox.Name = "RAWADCTextBox"
+        Me.RAWADCTextBox.ReadOnly = True
+        Me.RAWADCTextBox.Size = New System.Drawing.Size(197, 22)
+        Me.RAWADCTextBox.TabIndex = 10
+        '
+        'VoltADCTextBox
+        '
+        Me.VoltADCTextBox.Location = New System.Drawing.Point(592, 96)
+        Me.VoltADCTextBox.Name = "VoltADCTextBox"
+        Me.VoltADCTextBox.ReadOnly = True
+        Me.VoltADCTextBox.Size = New System.Drawing.Size(197, 22)
+        Me.VoltADCTextBox.TabIndex = 11
+        '
+        'ADCCheckBox
+        '
+        Me.ADCCheckBox.AutoSize = True
+        Me.ADCCheckBox.Location = New System.Drawing.Point(385, 70)
+        Me.ADCCheckBox.Name = "ADCCheckBox"
+        Me.ADCCheckBox.Size = New System.Drawing.Size(57, 20)
+        Me.ADCCheckBox.TabIndex = 12
+        Me.ADCCheckBox.Text = "ADC"
+        Me.ADCCheckBox.UseVisualStyleBackColor = True
         '
         'SerialComExample
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 16.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(800, 450)
-        Me.Controls.Add(Me.ADCRadioButton)
+        Me.Controls.Add(Me.ADCCheckBox)
+        Me.Controls.Add(Me.VoltADCTextBox)
+        Me.Controls.Add(Me.RAWADCTextBox)
+        Me.Controls.Add(Me.Label4)
         Me.Controls.Add(Me.Label3)
         Me.Controls.Add(Me.Label2)
         Me.Controls.Add(Me.Label1)
@@ -155,5 +187,8 @@ Partial Class SerialComExample
     Friend WithEvents Label1 As Label
     Friend WithEvents Label2 As Label
     Friend WithEvents Label3 As Label
-    Friend WithEvents ADCRadioButton As RadioButton
+    Friend WithEvents Label4 As Label
+    Friend WithEvents RAWADCTextBox As TextBox
+    Friend WithEvents VoltADCTextBox As TextBox
+    Friend WithEvents ADCCheckBox As CheckBox
 End Class
