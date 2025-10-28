@@ -30,7 +30,10 @@ Partial Class SerialComExample
         Me.BytesToReadTextBox = New System.Windows.Forms.TextBox()
         Me.HandShakeAsciiTextBox = New System.Windows.Forms.TextBox()
         Me.HandShakeHexTextBox = New System.Windows.Forms.TextBox()
-        Me.SendDataButton = New System.Windows.Forms.Button()
+        Me.Label1 = New System.Windows.Forms.Label()
+        Me.Label2 = New System.Windows.Forms.Label()
+        Me.Label3 = New System.Windows.Forms.Label()
+        Me.ADCRadioButton = New System.Windows.Forms.RadioButton()
         CType(Me.PWMTrackBar, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -82,21 +85,53 @@ Partial Class SerialComExample
         Me.HandShakeHexTextBox.Size = New System.Drawing.Size(177, 22)
         Me.HandShakeHexTextBox.TabIndex = 4
         '
-        'SendDataButton
+        'Label1
         '
-        Me.SendDataButton.Location = New System.Drawing.Point(301, 12)
-        Me.SendDataButton.Name = "SendDataButton"
-        Me.SendDataButton.Size = New System.Drawing.Size(193, 79)
-        Me.SendDataButton.TabIndex = 5
-        Me.SendDataButton.Text = "Send Data"
-        Me.SendDataButton.UseVisualStyleBackColor = True
+        Me.Label1.AutoSize = True
+        Me.Label1.Location = New System.Drawing.Point(12, 136)
+        Me.Label1.Name = "Label1"
+        Me.Label1.Size = New System.Drawing.Size(42, 16)
+        Me.Label1.TabIndex = 5
+        Me.Label1.Text = "0.5ms"
+        '
+        'Label2
+        '
+        Me.Label2.AutoSize = True
+        Me.Label2.Location = New System.Drawing.Point(452, 136)
+        Me.Label2.Name = "Label2"
+        Me.Label2.Size = New System.Drawing.Size(42, 16)
+        Me.Label2.TabIndex = 6
+        Me.Label2.Text = "2.5ms"
+        '
+        'Label3
+        '
+        Me.Label3.AutoSize = True
+        Me.Label3.Location = New System.Drawing.Point(301, 71)
+        Me.Label3.Name = "Label3"
+        Me.Label3.Size = New System.Drawing.Size(78, 16)
+        Me.Label3.TabIndex = 7
+        Me.Label3.Text = "Pulse Width"
+        '
+        'ADCRadioButton
+        '
+        Me.ADCRadioButton.AutoSize = True
+        Me.ADCRadioButton.Location = New System.Drawing.Point(385, 71)
+        Me.ADCRadioButton.Name = "ADCRadioButton"
+        Me.ADCRadioButton.Size = New System.Drawing.Size(56, 20)
+        Me.ADCRadioButton.TabIndex = 8
+        Me.ADCRadioButton.TabStop = True
+        Me.ADCRadioButton.Text = "ADC"
+        Me.ADCRadioButton.UseVisualStyleBackColor = True
         '
         'SerialComExample
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 16.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(800, 450)
-        Me.Controls.Add(Me.SendDataButton)
+        Me.Controls.Add(Me.ADCRadioButton)
+        Me.Controls.Add(Me.Label3)
+        Me.Controls.Add(Me.Label2)
+        Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.HandShakeHexTextBox)
         Me.Controls.Add(Me.HandShakeAsciiTextBox)
         Me.Controls.Add(Me.BytesToReadTextBox)
@@ -117,5 +152,8 @@ Partial Class SerialComExample
     Friend WithEvents BytesToReadTextBox As TextBox
     Friend WithEvents HandShakeAsciiTextBox As TextBox
     Friend WithEvents HandShakeHexTextBox As TextBox
-    Friend WithEvents SendDataButton As Button
+    Friend WithEvents Label1 As Label
+    Friend WithEvents Label2 As Label
+    Friend WithEvents Label3 As Label
+    Friend WithEvents ADCRadioButton As RadioButton
 End Class
