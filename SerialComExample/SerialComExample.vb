@@ -88,9 +88,9 @@ Public Class SerialComExample
         End Select
 
         If ADCCheckBox.Checked = True Then
-            data(1) = &H23
+            data(1) = &H23 '#
         Else
-            data(1) = &H21
+            data(1) = &H21 '!
         End If
 
         SerialPort1.Write(data, 0, 2)
@@ -107,7 +107,7 @@ Public Class SerialComExample
         CheckForIllegalCrossThreadCalls = False
         Dim numberOfBytes = SerialPort1.BytesToRead
         'Dim buffer(numberOfBytes - 1) As Byte
-        Dim buffer(2) As Byte
+        Dim buffer(3) As Byte
         Dim got As Integer = SerialPort1.Read(buffer, 0, numberOfBytes)
         Dim adresH As Integer
         Dim adresTotal As Integer
@@ -117,36 +117,49 @@ Public Class SerialComExample
 
         If got > 0 Then
             If buffer(0) = &H24 Then
-                'Do Until buffer(1).ToString("X2") IsNot "00"
-                If ADCCheckBox.Checked = True Then
-                    'RAWADCTextBox.Text = buffer(1).ToString("X2") + " & " + buffer(2).ToString("X2")
-                    Select Case buffer(1)
-                        Case 0
-                            adresH = 0
-                        Case 1
-                            adresH = 256
-                        Case 2
-                            adresH = 512
-                        Case 3
-                            adresH = 768
-                        Case Else
-                            adresH = 1024
-                    End Select
-                    'RAWADCTextBox.Text = buffer(1).ToString + " & " + buffer(2).ToString
-                    adresTotal = buffer(2) + adresH
-                    RAWADCTextBox.Text = CStr(adresTotal)
+                HandShakeHexTextBox.Text = buffer(0).ToString + " & " + buffer(1).ToString + " & " + buffer(2).ToString + " & " + buffer(3).ToString
+                If buffer(1) = &H23 Then
+                    If ADCCheckBox.Checked = True Then
+                        'RAWADCTextBox.Text = buffer(1).ToString("X2") + " & " + buffer(2).ToString("X2")
+                        Select Case buffer(3)
+                            Case 0
+                                adresH = 0
+                            Case 1
+                                adresH = 256
+                            Case 2
+                                adresH = 512
+                            Case 3
+                                adresH = 768
+                            Case Else
+                                adresH = 1024
+                        End Select
+                        'RAWADCTextBox.Text = buffer(1).ToString + " & " + buffer(2).ToString
+                        adresTotal = buffer(2) + adresH
+                        RAWADCTextBox.Text = CStr(adresTotal)
 
-                    voltage = adresTotal * 0.004888
-                    VoltADCTextBox.Text = CStr(voltage)
+                        voltage = adresTotal * 0.004888
+                        VoltADCTextBox.Text = CStr(voltage) + "V"
+                    End If
                 End If
                 PWM_Select()
-                'Loop
             End If
-
         End If
+
     End Sub
     Private Sub PWMTrackBar_Scroll(sender As Object, e As EventArgs) Handles PWMTrackBar.Scroll
         'Timer1.Start()
+        Dim data(0) As Byte
+        data(0) = &H24 '$
+
+        SerialPort1.ReadExisting()
+        SerialPort1.Write(data, 0, 1)
+    End Sub
+
+    Private Sub HandShakeAsciiTextBox_TextChanged(sender As Object, e As EventArgs) Handles HandShakeAsciiTextBox.TextChanged
+
+    End Sub
+
+    Private Sub ADCCheckBox_CheckedChanged(sender As Object, e As EventArgs) Handles ADCCheckBox.CheckedChanged
         Dim data(0) As Byte
         data(0) = &H24 '$
 

@@ -45,6 +45,7 @@ Partial Class SerialComExample
         '
         'Timer1
         '
+        Me.Timer1.Interval = 250
         '
         'CountTextBox
         '
