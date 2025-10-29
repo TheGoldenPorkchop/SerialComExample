@@ -109,6 +109,10 @@ Public Class SerialComExample
         'Dim buffer(numberOfBytes - 1) As Byte
         Dim buffer(2) As Byte
         Dim got As Integer = SerialPort1.Read(buffer, 0, numberOfBytes)
+        Dim adresH As Integer
+        Dim adresTotal As Integer
+        Dim voltage As Double
+
         BytesToReadTextBox.Text = CStr(numberOfBytes)
 
         If got > 0 Then
@@ -116,7 +120,24 @@ Public Class SerialComExample
                 'Do Until buffer(1).ToString("X2") IsNot "00"
                 If ADCCheckBox.Checked = True Then
                     'RAWADCTextBox.Text = buffer(1).ToString("X2") + " & " + buffer(2).ToString("X2")
-                    RAWADCTextBox.Text = buffer(1).ToString + " & " + buffer(2).ToString
+                    Select Case buffer(1)
+                        Case 0
+                            adresH = 0
+                        Case 1
+                            adresH = 256
+                        Case 2
+                            adresH = 512
+                        Case 3
+                            adresH = 768
+                        Case Else
+                            adresH = 1024
+                    End Select
+                    'RAWADCTextBox.Text = buffer(1).ToString + " & " + buffer(2).ToString
+                    adresTotal = buffer(2) + adresH
+                    RAWADCTextBox.Text = CStr(adresTotal)
+
+                    voltage = adresTotal * 0.004888
+                    VoltADCTextBox.Text = CStr(voltage)
                 End If
                 PWM_Select()
                 'Loop
