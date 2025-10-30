@@ -106,8 +106,8 @@ Public Class SerialComExample
     Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
         CheckForIllegalCrossThreadCalls = False
         Dim numberOfBytes = SerialPort1.BytesToRead
-        'Dim buffer(numberOfBytes - 1) As Byte
-        Dim buffer(3) As Byte
+        Dim buffer(numberOfBytes - 1) As Byte
+        'Dim buffer(3) As Byte
         Dim got As Integer = SerialPort1.Read(buffer, 0, numberOfBytes)
         Dim adresH As Integer
         Dim adresTotal As Integer
@@ -117,37 +117,38 @@ Public Class SerialComExample
 
         If got > 0 Then
             If buffer(0) = &H24 Then
-                HandShakeHexTextBox.Text = buffer(0).ToString + " & " + buffer(1).ToString + " & " + buffer(2).ToString + " & " + buffer(3).ToString
-                If buffer(1) = &H23 Then
-                    If ADCCheckBox.Checked = True Then
-                        'RAWADCTextBox.Text = buffer(1).ToString("X2") + " & " + buffer(2).ToString("X2")
-                        Select Case buffer(3)
-                            Case 0
-                                adresH = 0
-                            Case 1
-                                adresH = 256
-                            Case 2
-                                adresH = 512
-                            Case 3
-                                adresH = 768
-                            Case Else
-                                adresH = 1024
-                        End Select
-                        'RAWADCTextBox.Text = buffer(1).ToString + " & " + buffer(2).ToString
-                        adresTotal = buffer(2) + adresH
-                        RAWADCTextBox.Text = CStr(adresTotal)
+                If buffer.Length = 4 Then
+                    HandShakeHexTextBox.Text = buffer(0).ToString + " & " + buffer(1).ToString + " & " + buffer(2).ToString + " & " + buffer(3).ToString
+                    If buffer(1) = &H23 Then
+                        If ADCCheckBox.Checked = True Then
+                            Select Case buffer(2)
+                                Case 0
+                                    adresH = 0
+                                Case 1
+                                    adresH = 256
+                                Case 2
+                                    adresH = 512
+                                Case 3
+                                    adresH = 768
+                                Case Else
+                                    adresH = 1024
+                            End Select
 
-                        voltage = adresTotal * 0.004888
-                        VoltADCTextBox.Text = CStr(voltage) + "V"
+                            adresTotal = buffer(3) + adresH
+                            RAWADCTextBox.Text = CStr(adresTotal)
+                            voltage = adresTotal * 0.004888
+                            VoltADCTextBox.Text = CStr(voltage) + "V"
+                        End If
                     End If
+                    PWM_Select()
+                Else
+                    HandShakeHexTextBox.Text = "XX ERROR XX"
                 End If
-                PWM_Select()
             End If
         End If
 
     End Sub
     Private Sub PWMTrackBar_Scroll(sender As Object, e As EventArgs) Handles PWMTrackBar.Scroll
-        'Timer1.Start()
         Dim data(0) As Byte
         data(0) = &H24 '$
 
@@ -155,11 +156,21 @@ Public Class SerialComExample
         SerialPort1.Write(data, 0, 1)
     End Sub
 
-    Private Sub HandShakeAsciiTextBox_TextChanged(sender As Object, e As EventArgs) Handles HandShakeAsciiTextBox.TextChanged
+    Private Sub ADCCheckBox_CheckedChanged(sender As Object, e As EventArgs) Handles ADCCheckBox.CheckedChanged
+        Dim data(0) As Byte
+        data(0) = &H24 '$
+
+        SerialPort1.ReadExisting()
+        SerialPort1.Write(data, 0, 1)
+        If ADCCheckBox.Checked = True Then
+            AquireDataButton.Enabled = True
+        Else
+            AquireDataButton.Enabled = False
+        End If
 
     End Sub
 
-    Private Sub ADCCheckBox_CheckedChanged(sender As Object, e As EventArgs) Handles ADCCheckBox.CheckedChanged
+    Private Sub AquireDataButton_Click(sender As Object, e As EventArgs) Handles AquireDataButton.Click
         Dim data(0) As Byte
         data(0) = &H24 '$
 

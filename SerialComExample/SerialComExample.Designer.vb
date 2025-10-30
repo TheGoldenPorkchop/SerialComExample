@@ -37,6 +37,7 @@ Partial Class SerialComExample
         Me.RAWADCTextBox = New System.Windows.Forms.TextBox()
         Me.VoltADCTextBox = New System.Windows.Forms.TextBox()
         Me.ADCCheckBox = New System.Windows.Forms.CheckBox()
+        Me.AquireDataButton = New System.Windows.Forms.Button()
         CType(Me.PWMTrackBar, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -45,7 +46,7 @@ Partial Class SerialComExample
         '
         'Timer1
         '
-        Me.Timer1.Interval = 250
+        Me.Timer1.Interval = 30
         '
         'CountTextBox
         '
@@ -153,11 +154,22 @@ Partial Class SerialComExample
         Me.ADCCheckBox.Text = "ADC"
         Me.ADCCheckBox.UseVisualStyleBackColor = True
         '
+        'AquireDataButton
+        '
+        Me.AquireDataButton.Enabled = False
+        Me.AquireDataButton.Location = New System.Drawing.Point(592, 124)
+        Me.AquireDataButton.Name = "AquireDataButton"
+        Me.AquireDataButton.Size = New System.Drawing.Size(102, 52)
+        Me.AquireDataButton.TabIndex = 13
+        Me.AquireDataButton.Text = "Acquire Data"
+        Me.AquireDataButton.UseVisualStyleBackColor = True
+        '
         'SerialComExample
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 16.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(800, 450)
+        Me.Controls.Add(Me.AquireDataButton)
         Me.Controls.Add(Me.ADCCheckBox)
         Me.Controls.Add(Me.VoltADCTextBox)
         Me.Controls.Add(Me.RAWADCTextBox)
@@ -192,4 +204,5 @@ Partial Class SerialComExample
     Friend WithEvents RAWADCTextBox As TextBox
     Friend WithEvents VoltADCTextBox As TextBox
     Friend WithEvents ADCCheckBox As CheckBox
+    Friend WithEvents AquireDataButton As Button
 End Class
